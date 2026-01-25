@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=VT323&display=swap');
+
+:root {
+  --gold: #fbbf24;
+  --navy-dark: #0f172a;
+  --monitor-bg: #050a05;
+  --monitor-text: #4ade80; 
+}
+
+/* BODY STYLES - The Deep Void */
+body {
+  background-color: #020617; 
+  background-image: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  color: #e2e8f0;
+  font-family: 'Outfit', sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+/* CRT MONITOR STYLES */
+.crt-monitor {
+  background-color: var(--monitor-bg);
+  border: 4px solid #333;
+  border-radius: 10px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+}
+.crt-monitor::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+.crt-text {
+  font-family: 'VT323', monospace;
+  color: var(--monitor-text);
+  text-shadow: 0 0 5px var(--monitor-text);
+  letter-spacing: 2px;
+}
+
+/* CHAIN LINK */
+.chain-link {
+  width: 2px;
+  height: 8px;
+  background: linear-gradient(180deg, #475569, #94a3b8, #475569);
+  margin: 1px 0;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+/* LIGHTBULB GLOW ANIMATION */
+@keyframes bulb-pulse {
+  0% { text-shadow: 0 0 5px #fbbf24; opacity: 0.8; }
+  50% { text-shadow: 0 0 20px #fbbf24, 0 0 30px #fbbf24; opacity: 1; }
+  100% { text-shadow: 0 0 5px #fbbf24; opacity: 0.8; }
+}
+.bulb-on {
+  color: #fbbf24;
+  animation: bulb-pulse 2s infinite;
+}
+.bulb-off {
+  color: #475569;
+}
+
+/* INPUT FIELDS (Base style) */
+.modern-input {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid #334155;
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
