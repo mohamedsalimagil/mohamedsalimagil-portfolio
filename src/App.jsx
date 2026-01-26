@@ -3,20 +3,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaTimes, FaExternalLinkAlt, FaDownload, FaMapMarkerAlt, FaPaperPlane, FaLightbulb } from 'react-icons/fa';
 import { SiPython, SiJavascript, SiReact, SiFlask, SiPostgresql, SiGit, SiTailwindcss, SiNodedotjs } from 'react-icons/si';
 
-// IMPORT ASSETS
+
 import logo from './assets/logo.png'; 
 import cliImage from './assets/cli.png'; 
 import resumeFile from './assets/resume.pdf'; 
 
-// --- ANIMATION VARIANTS FOR NAME ---
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1, // Delay between each letter dropping
-      delayChildren: 0.5,
-    },
+    transition: { staggerChildren: 0.1, delayChildren: 0.5 },
   },
 };
 
@@ -26,15 +23,11 @@ const letterVariants = {
     y: 0,
     opacity: 1,
     rotate: 0,
-    transition: {
-      type: "spring",
-      damping: 12,
-      stiffness: 200,
-    },
+    transition: { type: "spring", damping: 12, stiffness: 200 },
   },
 };
 
-// --- DATA ---
+
 const initialSkills = [
   { id: 1, name: "Python", icon: <SiPython />, color: "#fbbf24", role: "Backend / Scripting", desc: "Data processing, CLI tools, and server-side logic." }, 
   { id: 2, name: "JavaScript", icon: <SiJavascript />, color: "#facc15", role: "Core Logic", desc: "ES6+ standards, DOM manipulation, and async operations." }, 
@@ -88,9 +81,12 @@ const projects = [
     id: 5,
     title: "Blood Glucose (CLI)",
     type: "Python Command Line Tool",
-    tech_line: "Python • File I/O",
-    desc: "A backend-focused tool for health data. Demonstrates modular Python architecture, data validation, and flat-file storage.",
-    link: "https://github.com/mohamedsalimagil/blood_glucose_tracker",
+    tech_line: "Python • Replit Embed",
+    desc: "A backend-focused tool for health data. Running live via Replit environment.",
+    
+    link: "https://replit.com/@MohamedAgil/bloodglucosetracker?embed=true",
+    
+    repo: "https://github.com/mohamedsalimagil/blood_glucose_tracker",
     isCLI: true, 
     image: cliImage,
     chainLength: 6
@@ -133,13 +129,13 @@ function App() {
     return () => clearInterval(intervalId);
   }, [isPaused]); 
 
-  // Function to split text for animation
+  
   const nameText = "MOHAMED SALIM AGIL";
 
   return (
     <div className="min-h-screen text-slate-300 font-sans selection:bg-amber-500 selection:text-black">
       
-      {/* --- NAVBAR WITH FALLING TEXT --- */}
+      
       <nav className="fixed w-full top-0 z-50 px-6 py-4 flex justify-between items-center backdrop-blur-md bg-black/40 border-b border-white/5">
         <div className="w-auto overflow-hidden"> 
             <motion.div 
@@ -155,7 +151,6 @@ function App() {
               ))}
             </motion.div>
         </div>
-        
         <ul className="flex gap-8 text-xs font-bold tracking-[0.2em] text-slate-400 uppercase hidden md:flex">
           <li className="hover:text-amber-400 cursor-pointer transition"><a href="#skills">Skills</a></li>
           <li className="hover:text-amber-400 cursor-pointer transition"><a href="#projects">Work</a></li>
@@ -163,7 +158,7 @@ function App() {
         </ul>
       </nav>
 
-      {/* --- HERO SECTION --- */}
+      
       <header className="min-h-screen flex items-center px-4 md:px-20 pt-20 bg-transparent">
         <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center md:items-start gap-12">
             <div className="flex-shrink-0">
@@ -196,7 +191,7 @@ function App() {
         </div>
       </header>
 
-      {/* --- SKILLS SECTION --- */}
+      
       <section id="skills" className="py-24 px-4 bg-black/20 border-t border-white/5">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
               <div className="w-full md:w-1/2 flex flex-col items-start">
@@ -243,7 +238,7 @@ function App() {
           </div>
       </section>
 
-      {/* --- PROJECTS SECTION --- */}
+      
       <section id="projects" className="py-32 px-4 relative bg-transparent">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold mb-24 text-center text-white">
@@ -283,7 +278,7 @@ function App() {
         </div>
       </section>
 
-      {/* --- CONTACT FORM --- */}
+      
       <section id="contact" className="py-32 px-4 bg-black/30">
           <div className="max-w-5xl mx-auto bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl">
               <div className="md:w-5/12 bg-black/40 p-10 flex flex-col justify-between border-r border-slate-800">
@@ -358,7 +353,7 @@ function App() {
           </footer>
       </section>
 
-      {/* --- MODAL (Unchanged) --- */}
+      
       <AnimatePresence>
         {selectedId && (
           <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
@@ -366,17 +361,40 @@ function App() {
             {projects.map(project => (
                 project.id === selectedId && (
                     <motion.div layoutId={`card-${project.id}`} key={project.id} className="w-full max-w-6xl bg-[#0f172a] border border-slate-700 rounded-xl overflow-hidden shadow-2xl relative z-70 flex flex-col md:flex-row h-[90vh]">
+                        
+                        
                         <div className="w-full md:w-4/12 p-8 flex flex-col bg-[#111c30] border-r border-slate-700 overflow-y-auto">
                             <button onClick={(e) => { e.stopPropagation(); setSelectedId(null); }} className="self-end text-slate-400 hover:text-white mb-6 p-2 rounded hover:bg-slate-700 transition"><FaTimes /></button>
                             <h2 className="text-3xl font-bold text-white mb-2">{project.title}</h2>
                             <p className="text-amber-500 text-xs uppercase tracking-widest font-bold mb-6">{project.type}</p>
                             <p className="text-slate-300 text-sm leading-relaxed mb-8">{project.desc}</p>
-                            <a href={project.link} target="_blank" rel="noreferrer" className="mt-auto py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold text-center uppercase tracking-widest rounded transition">
-                                {project.isCLI ? "View Source Code" : "Launch Live App"} <FaExternalLinkAlt className="inline ml-2"/>
+                            
+                            
+                            <a href={project.link} target="_blank" rel="noreferrer" className="mt-auto py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold text-center uppercase tracking-widest rounded transition flex justify-center items-center gap-2">
+                                {project.isCLI ? "Run Live Terminal" : "Launch Live App"} <FaExternalLinkAlt />
                             </a>
+
+                            
+                            {project.repo && (
+                                <a href={project.repo} target="_blank" rel="noreferrer" className="mt-4 py-4 bg-slate-700 hover:bg-slate-600 text-white font-bold text-center uppercase tracking-widest rounded transition flex justify-center items-center gap-2">
+                                    <FaGithub className="text-xl"/> Source Code
+                                </a>
+                            )}
                         </div>
+
+                        
                         <div className="w-full md:w-8/12 bg-black relative flex items-center justify-center">
-                            {project.isCLI ? <img src={project.image} className="max-w-full max-h-full object-contain" /> : <iframe src={project.link} className="w-full h-full border-none bg-white" />}
+                            {project.isCLI ? (
+                                <iframe 
+                                    src={project.link} 
+                                    className="w-full h-full border-none bg-black rounded-lg"
+                                    title="Replit CLI"
+                                    allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+                                    sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+                                />
+                            ) : (
+                                <iframe src={project.link} className="w-full h-full border-none bg-white" title="Project Web View" />
+                            )}
                         </div>
                     </motion.div>
                 )
