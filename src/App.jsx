@@ -306,7 +306,7 @@ function App() {
                         </div>
                         <div className="flex items-center gap-4 text-slate-300">
                             <FaMapMarkerAlt className="text-amber-500"/>
-                            <p className="text-sm">Mombasa, Kenya</p>
+                            <p className="text-sm">Available for Global Remote Roles</p>
                         </div>
                     </div>
                   </div>
