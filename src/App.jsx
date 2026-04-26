@@ -157,22 +157,22 @@ function App() {
     }
   };
   const [isNavVisible, setIsNavVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollY = useRef(0);
 
-  // Hide nav on scroll down
+  // Hide nav on scroll down without blocking main thread
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setIsNavVisible(false);
+      if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+        setIsNavVisible(prev => prev ? false : prev);
       } else {
-        setIsNavVisible(true);
+        setIsNavVisible(prev => !prev ? true : prev);
       }
-      setLastScrollY(currentScrollY);
+      lastScrollY.current = currentScrollY;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   const toggleBulb = (id) => {
     setLitBulbs(prev => ({ ...prev, [id]: !prev[id] }));

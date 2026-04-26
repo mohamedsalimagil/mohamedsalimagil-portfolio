@@ -20,7 +20,6 @@ html {
 body {
   background-color: #020617; 
   background-image: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
-  background-attachment: fixed;
   background-size: cover;
   color: #e2e8f0;
   font-family: 'Outfit', sans-serif;
