@@ -8,7 +8,7 @@ import logo from './assets/logo.png';
 import cliImage from './assets/cli.png'; 
 import resumeFile from './assets/resume.pdf'; 
 import introVideo from './assets/intro.mp4';
-import GitHubCalendar from 'react-github-calendar';
+import { GitHubCalendar } from 'react-github-calendar';
 
 // --- ANIMATION VARIANTS FOR NAME ---
 const containerVariants = {
