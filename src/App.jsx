@@ -466,22 +466,23 @@ function App() {
                   </form>
               </div>
           </div>
-          {/* Enhanced Footer */}
-          <footer className="mt-20 pt-12 footer-gradient">
-              <div className="flex flex-col items-center gap-6">
-                  <div className="flex gap-6">
-                      <a href="https://github.com/mohamedsalimagil" target="_blank" className="text-slate-600 hover:text-amber-400 transition text-lg"><FaGithub /></a>
-                      <a href="https://linkedin.com/in/mohamed-salim-agil-110a92270" target="_blank" className="text-slate-600 hover:text-amber-400 transition text-lg"><FaLinkedin /></a>
-                      <a href="mailto:mohamedsalimagil.dev@gmail.com" className="text-slate-600 hover:text-amber-400 transition text-lg"><FaEnvelope /></a>
-                  </div>
-                  <p className="text-slate-700 text-[10px] uppercase tracking-widest">Built with React &middot; Framer Motion &middot; Tailwind CSS</p>
-                  <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="back-to-top mb-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-amber-500 text-xs flex items-center gap-2 hover:bg-slate-700">
-                      <FaArrowUp /> Back to Top
-                  </button>
-                  <p className="text-slate-600 text-xs pb-6">&copy; 2026 Mohamed Salim Agil. All rights reserved.</p>
-              </div>
-          </footer>
       </motion.section>
+
+      {/* Enhanced Footer */}
+      <footer className="mt-20 pt-12 footer-gradient relative z-10">
+          <div className="flex flex-col items-center gap-6">
+              <div className="flex gap-6">
+                  <a href="https://github.com/mohamedsalimagil" target="_blank" className="text-slate-600 hover:text-amber-400 transition text-lg"><FaGithub /></a>
+                  <a href="https://linkedin.com/in/mohamed-salim-agil-110a92270" target="_blank" className="text-slate-600 hover:text-amber-400 transition text-lg"><FaLinkedin /></a>
+                  <a href="mailto:mohamedsalimagil.dev@gmail.com" className="text-slate-600 hover:text-amber-400 transition text-lg"><FaEnvelope /></a>
+              </div>
+              <p className="text-slate-700 text-[10px] uppercase tracking-widest">Built with React &middot; Framer Motion &middot; Tailwind CSS</p>
+              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="back-to-top mb-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-amber-500 text-xs flex items-center gap-2 hover:bg-slate-700">
+                  <FaArrowUp /> Back to Top
+              </button>
+              <p className="text-slate-600 text-xs pb-6">&copy; 2026 Mohamed Salim Agil. All rights reserved.</p>
+          </div>
+      </footer>
 
       {/* --- MODAL (UPDATED WITH REPLIT + GITHUB BUTTONS) --- */}
       <AnimatePresence>
