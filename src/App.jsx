@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaTimes, FaExternalLinkAlt, FaDownload, FaMapMarkerAlt, FaPaperPlane, FaLightbulb } from 'react-icons/fa';
-import { SiPython, SiJavascript, SiReact, SiFlask, SiPostgresql, SiGit, SiTailwindcss, SiNodedotjs } from 'react-icons/si';
+import { FaGithub, FaLinkedin, FaEnvelope, FaTimes, FaExternalLinkAlt, FaDownload, FaMapMarkerAlt, FaPaperPlane, FaLightbulb, FaArrowUp } from 'react-icons/fa';
+import { SiPython, SiJavascript, SiReact, SiFlask, SiPostgresql, SiGit, SiTailwindcss, SiNodedotjs, SiDocker, SiSocketdotio, SiLinux } from 'react-icons/si';
 
 // IMPORT ASSETS
 import logo from './assets/logo.png'; 
 import cliImage from './assets/cli.png'; 
 import resumeFile from './assets/resume.pdf'; 
-import introVideo from './assets/intro.mp4'; // <--- IMPORTED VIDEO
+import introVideo from './assets/intro.mp4';
 
 // --- ANIMATION VARIANTS FOR NAME ---
 const containerVariants = {
@@ -38,6 +38,9 @@ const initialSkills = [
   { id: 6, name: "Git", icon: <SiGit />, color: "#f97316", role: "Version Control", desc: "Branch management, merging, and CI/CD workflows." }, 
   { id: 7, name: "Tailwind", icon: <SiTailwindcss />, color: "#38bdf8", role: "Styling Engine", desc: "Utility-first CSS for responsive, modern UIs." }, 
   { id: 8, name: "Node.js", icon: <SiNodedotjs />, color: "#4ade80", role: "Runtime Environment", desc: "Server-side JavaScript execution and package management." }, 
+  { id: 9, name: "Docker", icon: <SiDocker />, color: "#2496ED", role: "Containerization", desc: "Container orchestration, Docker Compose, and production deployments." },
+  { id: 10, name: "Socket.IO", icon: <SiSocketdotio />, color: "#c8c8c8", role: "Real-Time", desc: "WebSocket-based real-time communication and live collaboration." },
+  { id: 11, name: "Linux", icon: <SiLinux />, color: "#FCC624", role: "Systems", desc: "Server administration, shell scripting, and homelab infrastructure." },
   null 
 ];
 
@@ -89,8 +92,52 @@ const projects = [
     isCLI: true, 
     image: cliImage,
     chainLength: 6
+  },
+  {
+    id: 6,
+    title: "TaskZilla Pro",
+    type: "SaaS Platform",
+    tech_line: "React • Flask • PostgreSQL • Socket.IO • Docker",
+    desc: "Enterprise project management with real-time Kanban boards, team workspaces, AI-powered task breakdown, tiered subscriptions, and institutional assessments.",
+    link: "https://taskzilla.mohamedsalimagil.dev/",
+    repo: "https://github.com/mohamedsalimagil",
+    chainLength: 14
   }
 ];
+
+// --- SCROLL REVEAL VARIANTS ---
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
+};
+
+// --- PARTICLES BACKGROUND ---
+function ParticlesBackground() {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    let animId;
+    let particles = [];
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    const makePart = () => ({ x: Math.random() * canvas.width, y: canvas.height + 10, size: Math.random() * 2 + 0.5, vy: Math.random() * 0.5 + 0.15, vx: (Math.random() - 0.5) * 0.3, o: Math.random() * 0.4 + 0.1 });
+    const init = () => { resize(); particles = Array.from({ length: 55 }, makePart); particles.forEach(p => p.y = Math.random() * canvas.height); };
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.y -= p.vy; p.x += p.vx;
+        if (p.y < -10) Object.assign(p, makePart());
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(251, 191, 36, ${p.o})`; ctx.fill();
+      });
+      animId = requestAnimationFrame(draw);
+    };
+    init(); draw();
+    window.addEventListener('resize', resize);
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); };
+  }, []);
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" />;
+}
 
 function App() {
   const [selectedId, setSelectedId] = useState(null);
@@ -98,11 +145,14 @@ function App() {
   const [activeSkill, setActiveSkill] = useState(initialSkills[0]);
   const [isPaused, setIsPaused] = useState(false);
   const [litBulbs, setLitBulbs] = useState({});
+  const [activeSection, setActiveSection] = useState('');
+  const [typedText, setTypedText] = useState('');
 
   const toggleBulb = (id) => {
     setLitBulbs(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
+  // Sliding puzzle
   useEffect(() => {
     if (isPaused) return;
     const moveTile = () => {
@@ -112,7 +162,7 @@ function App() {
         const col = emptyIndex % 3;
         const neighbors = [];
         if (row > 0) neighbors.push(emptyIndex - 3); 
-        if (row < 2) neighbors.push(emptyIndex + 3); 
+        if (row < 3) neighbors.push(emptyIndex + 3); 
         if (col > 0) neighbors.push(emptyIndex - 1); 
         if (col < 2) neighbors.push(emptyIndex + 1); 
         const randomNeighborIndex = neighbors[Math.floor(Math.random() * neighbors.length)];
@@ -128,11 +178,32 @@ function App() {
     return () => clearInterval(intervalId);
   }, [isPaused]); 
 
-  // Function to split text for animation
+  // Typewriter effect
+  const fullTagline = "Engineering Logic. Designing Value.";
+  useEffect(() => {
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i <= fullTagline.length) { setTypedText(fullTagline.slice(0, i)); i++; }
+      else clearInterval(timer);
+    }, 60);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Active nav tracking
+  useEffect(() => {
+    const sections = document.querySelectorAll('section[id]');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); });
+    }, { threshold: 0.25 });
+    sections.forEach(s => obs.observe(s));
+    return () => obs.disconnect();
+  }, []);
+
   const nameText = "MOHAMED SALIM AGIL";
 
   return (
     <div className="min-h-screen text-slate-300 font-sans selection:bg-amber-500 selection:text-black">
+      <ParticlesBackground />
       
       {/* --- NAVBAR --- */}
       <nav className="fixed w-full top-0 z-50 px-6 py-4 flex justify-between items-center backdrop-blur-md bg-black/40 border-b border-white/5">
@@ -151,45 +222,41 @@ function App() {
             </motion.div>
         </div>
         <ul className="flex gap-8 text-xs font-bold tracking-[0.2em] text-slate-400 uppercase hidden md:flex">
-          <li className="hover:text-amber-400 cursor-pointer transition"><a href="#skills">Skills</a></li>
-          <li className="hover:text-amber-400 cursor-pointer transition"><a href="#projects">Work</a></li>
-          <li className="hover:text-amber-400 cursor-pointer transition"><a href="#contact">Contact</a></li>
+          {['skills', 'projects', 'contact'].map(s => (
+            <li key={s}><a href={`#${s}`} className={`nav-link cursor-pointer transition ${activeSection === s ? 'active' : 'hover:text-amber-400'}`}>{s === 'projects' ? 'Work' : s.charAt(0).toUpperCase() + s.slice(1)}</a></li>
+          ))}
         </ul>
       </nav>
 
       {/* --- HERO SECTION --- */}
-      <header className="min-h-screen flex items-center px-4 md:px-20 pt-20 bg-transparent">
+      <header className="relative min-h-screen flex items-center px-4 md:px-20 pt-20 bg-transparent z-10">
         <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center md:items-start gap-12">
             
-            {/* LEFT: Video Identity (REPLACED LOGO WITH VIDEO) */}
+            {/* LEFT: Video Identity with Glow Ring */}
             <div className="flex-shrink-0">
-                <div className="w-56 h-56 rounded-full overflow-hidden border-[4px] border-slate-700 shadow-xl bg-black relative">
-                    <video 
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline 
-                      className="w-full h-full object-cover"
-                    >
-                      <source src={introVideo} type="video/mp4" />
-                    </video>
+                <div className="glow-ring p-1 rounded-full">
+                  <div className="w-56 h-56 rounded-full overflow-hidden border-[4px] border-amber-500/30 shadow-xl bg-black relative">
+                      <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+                        <source src={introVideo} type="video/mp4" />
+                      </video>
+                  </div>
                 </div>
             </div>
 
             {/* RIGHT: Text Content */}
             <div className="text-left">
-                <p className="text-amber-500 font-bold text-sm tracking-widest uppercase mb-4">Junior Software Engineer</p>
-                <h1 className="text-5xl md:text-7xl font-extrabold mb-6 text-white tracking-tight leading-tight">
+                <motion.p initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="text-amber-500 font-bold text-sm tracking-widest uppercase mb-4">Junior Software Engineer</motion.p>
+                <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-5xl md:text-7xl font-extrabold mb-6 text-white tracking-tight leading-tight">
                     Mohamed Salim Agil
-                </h1>
+                </motion.h1>
                 <p className="text-xl md:text-2xl text-slate-400 mb-6 font-light">
-                    Engineering Logic. <span className="text-white font-medium">Designing Value.</span>
+                    <span className="typewriter-cursor">{typedText}</span>
                 </p>
-                <p className="max-w-2xl text-slate-500 text-base mb-8 leading-relaxed">
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="max-w-2xl text-slate-500 text-base mb-8 leading-relaxed">
                    I transform complex problems into clean, reliable code. 
                    My background in high-stakes accounting ensures accuracy; my passion for code ensures innovation.
-                </p>
-                <div className="flex flex-wrap gap-4">
+                </motion.p>
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.5 }} className="flex flex-wrap gap-4">
                     <a href={resumeFile} download="Mohamed_Salim_Agil_Resume" className="px-8 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded shadow-sm transition hover:-translate-y-1 flex items-center gap-2">
                       <FaDownload /> Download Resume
                     </a>
@@ -197,13 +264,21 @@ function App() {
                         <a href="https://github.com/mohamedsalimagil" target="_blank" className="text-2xl text-slate-500 hover:text-white transition"><FaGithub /></a>
                         <a href="https://linkedin.com/in/mohamed-salim-agil-110a92270" target="_blank" className="text-2xl text-slate-500 hover:text-white transition"><FaLinkedin /></a>
                     </div>
-                </div>
+                </motion.div>
+                {/* Stats Row */}
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }} className="flex gap-8 mt-8 pt-8 border-t border-slate-800">
+                    <div className="stat-item"><span className="text-2xl font-bold text-amber-500">6+</span><p className="text-xs text-slate-500 mt-1">Projects Built</p></div>
+                    <div className="stat-item"><span className="text-2xl font-bold text-amber-500">11</span><p className="text-xs text-slate-500 mt-1">Technologies</p></div>
+                    <div className="stat-item"><span className="text-2xl font-bold text-amber-500">∞</span><p className="text-xs text-slate-500 mt-1">Curiosity</p></div>
+                </motion.div>
             </div>
         </div>
       </header>
 
+      <div className="section-divider" />
+
       {/* --- SKILLS SECTION --- */}
-      <section id="skills" className="py-24 px-4 bg-black/20 border-t border-white/5">
+      <motion.section id="skills" className="py-24 px-4 bg-black/20 relative z-10" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
               <div className="w-full md:w-1/2 flex flex-col items-start">
                   <div className="mb-6 text-left">
@@ -247,10 +322,12 @@ function App() {
                   </div>
               </div>
           </div>
-      </section>
+      </motion.section>
+
+      <div className="section-divider" />
 
       {/* --- PROJECTS SECTION --- */}
-      <section id="projects" className="py-32 px-4 relative bg-transparent">
+      <motion.section id="projects" className="py-32 px-4 relative bg-transparent z-10" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold mb-24 text-center text-white">
              Featured <span className="text-amber-500">Deployments</span>
@@ -287,10 +364,12 @@ function App() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
+
+      <div className="section-divider" />
 
       {/* --- CONTACT FORM --- */}
-      <section id="contact" className="py-32 px-4 bg-black/30">
+      <motion.section id="contact" className="py-32 px-4 bg-black/30 relative z-10" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }}>
           <div className="max-w-5xl mx-auto bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl">
               <div className="md:w-5/12 bg-black/40 p-10 flex flex-col justify-between border-r border-slate-800">
                   <div>
@@ -359,10 +438,22 @@ function App() {
                   </form>
               </div>
           </div>
-          <footer className="mt-20 text-center text-slate-600 text-xs">
-              <p>&copy; 2026 Mohamed Salim Agil.</p>
+          {/* Enhanced Footer */}
+          <footer className="mt-20 pt-12 footer-gradient">
+              <div className="flex flex-col items-center gap-6">
+                  <div className="flex gap-6">
+                      <a href="https://github.com/mohamedsalimagil" target="_blank" className="text-slate-600 hover:text-amber-400 transition text-lg"><FaGithub /></a>
+                      <a href="https://linkedin.com/in/mohamed-salim-agil-110a92270" target="_blank" className="text-slate-600 hover:text-amber-400 transition text-lg"><FaLinkedin /></a>
+                      <a href="mailto:mohamedsalimagil.dev@gmail.com" className="text-slate-600 hover:text-amber-400 transition text-lg"><FaEnvelope /></a>
+                  </div>
+                  <p className="text-slate-700 text-[10px] uppercase tracking-widest">Built with React &middot; Framer Motion &middot; Tailwind CSS</p>
+                  <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="back-to-top mb-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-amber-500 text-xs flex items-center gap-2 hover:bg-slate-700">
+                      <FaArrowUp /> Back to Top
+                  </button>
+                  <p className="text-slate-600 text-xs pb-6">&copy; 2026 Mohamed Salim Agil. All rights reserved.</p>
+              </div>
           </footer>
-      </section>
+      </motion.section>
 
       {/* --- MODAL (UPDATED WITH REPLIT + GITHUB BUTTONS) --- */}
       <AnimatePresence>
@@ -395,14 +486,8 @@ function App() {
 
                         {/* PREVIEW WINDOW */}
                         <div className="w-full md:w-8/12 bg-black relative flex items-center justify-center">
-                            {project.isCLI ? (
-                                <iframe 
-                                    src={project.link} 
-                                    className="w-full h-full border-none bg-black rounded-lg"
-                                    title="Replit CLI"
-                                    allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-                                    sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-                                />
+                            {project.image ? (
+                                <img src={project.image} className="w-full h-full object-contain" alt={project.title} />
                             ) : (
                                 <iframe src={project.link} className="w-full h-full border-none bg-white" title="Project Web View" />
                             )}
