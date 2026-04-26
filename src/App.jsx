@@ -65,6 +65,16 @@ const projects = [
   },
   {
     id: 3,
+    title: "TaskZilla Pro",
+    type: "SaaS Platform",
+    tech_line: "React • Flask • PostgreSQL • Socket.IO • Docker",
+    desc: "Enterprise project management with real-time Kanban boards, team workspaces, AI-powered task breakdown, tiered subscriptions, and institutional assessments.",
+    link: "https://taskzilla.mohamedsalimagil.dev/",
+    repo: "https://github.com/mohamedsalimagil",
+    chainLength: 14
+  },
+  {
+    id: 4,
     title: "TaskZilla Lite",
     type: "Task Management System",
     tech_line: "JavaScript • JSON Server",
@@ -73,7 +83,7 @@ const projects = [
     chainLength: 8
   },
   {
-    id: 4,
+    id: 5,
     title: "Blood Glucose (Web)",
     type: "Health Tracking App",
     tech_line: "JavaScript • HTML5 • CSS3",
@@ -82,7 +92,7 @@ const projects = [
     chainLength: 10
   },
   {
-    id: 5,
+    id: 6,
     title: "Blood Glucose (CLI)",
     type: "Python Command Line Tool",
     tech_line: "Python • Replit Embed",
@@ -92,16 +102,6 @@ const projects = [
     isCLI: true, 
     image: cliImage,
     chainLength: 6
-  },
-  {
-    id: 6,
-    title: "TaskZilla Pro",
-    type: "SaaS Platform",
-    tech_line: "React • Flask • PostgreSQL • Socket.IO • Docker",
-    desc: "Enterprise project management with real-time Kanban boards, team workspaces, AI-powered task breakdown, tiered subscriptions, and institutional assessments.",
-    link: "https://taskzilla.mohamedsalimagil.dev/",
-    repo: "https://github.com/mohamedsalimagil",
-    chainLength: 14
   }
 ];
 
