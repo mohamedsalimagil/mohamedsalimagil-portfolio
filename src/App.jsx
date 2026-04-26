@@ -47,6 +47,16 @@ const initialSkills = [
 const projects = [
   {
     id: 1,
+    title: "TaskZilla Pro",
+    type: "SaaS Platform",
+    tech_line: "React • Flask • PostgreSQL • Socket.IO • Docker",
+    desc: "Enterprise project management with real-time Kanban boards, team workspaces, AI-powered task breakdown, tiered subscriptions, and institutional assessments.",
+    link: "https://taskzilla.mohamedsalimagil.dev/",
+    repo: "https://github.com/mohamedsalimagil",
+    chainLength: 14
+  },
+  {
+    id: 2,
     title: "Haki Yetu Digital",
     type: "Full-Stack Web App",
     tech_line: "React • Flask • PostgreSQL",
@@ -55,22 +65,12 @@ const projects = [
     chainLength: 12 
   },
   {
-    id: 2,
+    id: 3,
     title: "FanyaMap",
     type: "Volunteer Connect Platform",
     tech_line: "React • Flask • APIs", 
     desc: "Connects Kenyan communities with volunteer opportunities. Features role-based dashboards for NGOs/Volunteers and real-time application tracking.",
     link: "https://fanyamap-frontend.onrender.com/",
-    chainLength: 14
-  },
-  {
-    id: 3,
-    title: "TaskZilla Pro",
-    type: "SaaS Platform",
-    tech_line: "React • Flask • PostgreSQL • Socket.IO • Docker",
-    desc: "Enterprise project management with real-time Kanban boards, team workspaces, AI-powered task breakdown, tiered subscriptions, and institutional assessments.",
-    link: "https://taskzilla.mohamedsalimagil.dev/",
-    repo: "https://github.com/mohamedsalimagil",
     chainLength: 14
   },
   {
