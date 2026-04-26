@@ -8,6 +8,7 @@ import logo from './assets/logo.png';
 import cliImage from './assets/cli.png'; 
 import resumeFile from './assets/resume.pdf'; 
 import introVideo from './assets/intro.mp4';
+import GitHubCalendar from 'react-github-calendar';
 
 // --- ANIMATION VARIANTS FOR NAME ---
 const containerVariants = {
@@ -222,7 +223,7 @@ function App() {
             </motion.div>
         </div>
         <ul className="flex gap-8 text-xs font-bold tracking-[0.2em] text-slate-400 uppercase hidden md:flex">
-          {['skills', 'projects', 'contact'].map(s => (
+          {['skills', 'projects', 'activity', 'contact'].map(s => (
             <li key={s}><a href={`#${s}`} className={`nav-link cursor-pointer transition ${activeSection === s ? 'active' : 'hover:text-amber-400'}`}>{s === 'projects' ? 'Work' : s.charAt(0).toUpperCase() + s.slice(1)}</a></li>
           ))}
         </ul>
@@ -362,6 +363,33 @@ function App() {
                 </motion.div>
               </div>
             ))}
+          </div>
+        </div>
+      </motion.section>
+
+      <div className="section-divider" />
+
+      {/* --- ACTIVITY SECTION --- */}
+      <motion.section id="activity" className="py-32 px-4 relative bg-transparent z-10" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        <div className="max-w-5xl mx-auto flex flex-col items-center">
+          <h2 className="text-3xl font-bold mb-6 text-center text-white">
+             Development <span className="text-amber-500">Activity</span>
+          </h2>
+          <p className="text-slate-400 mb-12 text-center max-w-2xl">
+            A real-time view of my open-source contributions and active coding streaks on GitHub. Consistency is key to mastering the craft.
+          </p>
+          <div className="bg-[#0f172a]/80 backdrop-blur-md border border-slate-700 p-8 rounded-2xl shadow-xl w-full flex justify-center overflow-x-auto">
+             <GitHubCalendar 
+               username="mohamedsalimagil" 
+               colorScheme="dark"
+               theme={{
+                 light: ['#1e293b', '#fbbf24'],
+                 dark: ['#1e293b', '#b45309', '#d97706', '#f59e0b', '#fbbf24']
+               }}
+               fontSize={14}
+               blockSize={12}
+               blockMargin={4}
+             />
           </div>
         </div>
       </motion.section>
