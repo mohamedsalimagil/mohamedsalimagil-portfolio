@@ -148,6 +148,23 @@ function App() {
   const [litBulbs, setLitBulbs] = useState({});
   const [activeSection, setActiveSection] = useState('');
   const [typedText, setTypedText] = useState('');
+  const [isNavVisible, setIsNavVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  // Hide nav on scroll down
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        setIsNavVisible(false);
+      } else {
+        setIsNavVisible(true);
+      }
+      setLastScrollY(currentScrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   const toggleBulb = (id) => {
     setLitBulbs(prev => ({ ...prev, [id]: !prev[id] }));
@@ -207,7 +224,12 @@ function App() {
       <ParticlesBackground />
       
       {/* --- FLOATING NAVBAR --- */}
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl px-2 py-2 flex justify-between items-center backdrop-blur-xl bg-[#0f172a]/70 border border-white/10 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+      <motion.nav 
+        initial={{ y: 0 }}
+        animate={{ y: isNavVisible ? 0 : -100 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl px-2 py-2 flex justify-between items-center backdrop-blur-xl bg-[#0f172a]/70 border border-white/10 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+      >
         
         {/* LOGO */}
         <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center group cursor-pointer pl-1">
@@ -240,7 +262,7 @@ function App() {
         <a href="#contact" className="hidden md:flex px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 text-xs font-bold uppercase tracking-widest rounded-full transition-transform hover:scale-105 shadow-[0_0_15px_rgba(251,191,36,0.3)]">
            Let's Talk
         </a>
-      </nav>
+      </motion.nav>
 
       {/* --- HERO SECTION --- */}
       <header className="relative min-h-screen flex items-center px-4 md:px-20 pt-20 bg-transparent z-10">
