@@ -210,11 +210,12 @@ function App() {
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl px-2 py-2 flex justify-between items-center backdrop-blur-xl bg-[#0f172a]/70 border border-white/10 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
         
         {/* LOGO */}
-        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-3 pl-2 group cursor-pointer">
-           <div className="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center group-hover:border-amber-500 transition-colors">
-              <span className="text-amber-500 font-mono font-bold text-xs tracking-tighter">{'</>'}</span>
+        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center group cursor-pointer pl-1">
+           <div className="px-4 py-2 rounded-full bg-black/40 border border-white/5 group-hover:border-amber-500/50 transition-colors duration-300 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(251,191,36,0.8)]"></div>
+              <span className="text-white font-semibold tracking-widest text-xs uppercase hidden sm:block">Mohamed Salim</span>
+              <span className="text-white font-semibold tracking-widest text-xs uppercase sm:hidden">Mohamed</span>
            </div>
-           <span className="text-white font-bold tracking-widest text-sm hidden sm:block">Agil.</span>
         </a>
 
         {/* LINKS */}
