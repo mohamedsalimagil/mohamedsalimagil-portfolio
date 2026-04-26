@@ -206,27 +206,39 @@ function App() {
     <div className="min-h-screen text-slate-300 font-sans selection:bg-amber-500 selection:text-black">
       <ParticlesBackground />
       
-      {/* --- NAVBAR --- */}
-      <nav className="fixed w-full top-0 z-50 px-6 py-4 flex justify-between items-center backdrop-blur-md bg-black/40 border-b border-white/5">
-        <div className="w-auto overflow-hidden"> 
-            <motion.div 
-              className="text-xl md:text-2xl font-bold tracking-wider text-amber-400 font-mono drop-shadow-[0_0_5px_rgba(251,191,36,0.5)] flex"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {nameText.split("").map((char, index) => (
-                <motion.span key={index} variants={letterVariants}>
-                  {char === " " ? "\u00A0" : char}
-                </motion.span>
-              ))}
-            </motion.div>
-        </div>
-        <ul className="flex gap-8 text-xs font-bold tracking-[0.2em] text-slate-400 uppercase hidden md:flex">
-          {['skills', 'projects', 'activity', 'contact'].map(s => (
-            <li key={s}><a href={`#${s}`} className={`nav-link cursor-pointer transition ${activeSection === s ? 'active' : 'hover:text-amber-400'}`}>{s === 'projects' ? 'Work' : s.charAt(0).toUpperCase() + s.slice(1)}</a></li>
+      {/* --- FLOATING NAVBAR --- */}
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl px-2 py-2 flex justify-between items-center backdrop-blur-xl bg-[#0f172a]/70 border border-white/10 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+        
+        {/* LOGO */}
+        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-3 pl-2 group cursor-pointer">
+           <div className="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center group-hover:border-amber-500 transition-colors">
+              <span className="text-amber-500 font-mono font-bold text-xs tracking-tighter">{'</>'}</span>
+           </div>
+           <span className="text-white font-bold tracking-widest text-sm hidden sm:block">Agil.</span>
+        </a>
+
+        {/* LINKS */}
+        <ul className="flex items-center gap-1 relative">
+          {['skills', 'projects', 'activity'].map(s => (
+            <li key={s} className="relative">
+               <a href={`#${s}`} className={`relative z-10 px-4 py-2 text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-colors duration-300 block ${activeSection === s ? 'text-amber-500' : 'text-slate-400 hover:text-white'}`}>
+                  {s === 'projects' ? 'Work' : s}
+               </a>
+               {activeSection === s && (
+                  <motion.div 
+                    layoutId="navPill" 
+                    className="absolute inset-0 bg-amber-500/10 border border-amber-500/20 rounded-full z-0" 
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+               )}
+            </li>
           ))}
         </ul>
+
+        {/* CTA */}
+        <a href="#contact" className="hidden md:flex px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 text-xs font-bold uppercase tracking-widest rounded-full transition-transform hover:scale-105 shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+           Let's Talk
+        </a>
       </nav>
 
       {/* --- HERO SECTION --- */}

@@ -138,29 +138,7 @@ body {
   padding-right: 2px;
 }
 
-/* ACTIVE NAV LINK */
-.nav-link {
-  position: relative;
-  transition: color 0.3s ease;
-}
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #fbbf24;
-  transition: width 0.3s ease;
-  border-radius: 1px;
-  box-shadow: 0 0 6px rgba(251,191,36,0.4);
-}
-.nav-link.active::after {
-  width: 100%;
-}
-.nav-link.active {
-  color: #fbbf24 !important;
-}
+/* NAV PILL ACTIVE STATE handled by Framer Motion layoutId */
 
 /* STATS ROW */
 .stat-item {
