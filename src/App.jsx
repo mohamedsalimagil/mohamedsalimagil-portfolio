@@ -148,6 +148,14 @@ function App() {
   const [litBulbs, setLitBulbs] = useState({});
   const [activeSection, setActiveSection] = useState('');
   const [typedText, setTypedText] = useState('');
+
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -244,7 +252,7 @@ function App() {
         <ul className="flex items-center gap-1 relative">
           {['skills', 'projects', 'activity'].map(s => (
             <li key={s} className="relative">
-               <a href={`#${s}`} className={`relative z-10 px-4 py-2 text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-colors duration-300 block ${activeSection === s ? 'text-amber-500' : 'text-slate-400 hover:text-white'}`}>
+               <a href={`#${s}`} onClick={(e) => handleNavClick(e, s)} className={`relative z-10 px-4 py-2 text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-colors duration-300 block ${activeSection === s ? 'text-amber-500' : 'text-slate-400 hover:text-white'}`}>
                   {s === 'projects' ? 'Work' : s}
                </a>
                {activeSection === s && (
@@ -259,7 +267,7 @@ function App() {
         </ul>
 
         {/* CTA */}
-        <a href="#contact" className="hidden md:flex px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 text-xs font-bold uppercase tracking-widest rounded-full transition-transform hover:scale-105 shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+        <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="hidden md:flex px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 text-xs font-bold uppercase tracking-widest rounded-full transition-transform hover:scale-105 shadow-[0_0_15px_rgba(251,191,36,0.3)]">
            Let's Talk
         </a>
       </motion.nav>
