@@ -225,10 +225,10 @@ function App() {
       
       {/* --- FLOATING NAVBAR --- */}
       <motion.nav 
-        initial={{ y: 0 }}
-        animate={{ y: isNavVisible ? 0 : -100 }}
+        initial={{ y: 0, x: "-50%" }}
+        animate={{ y: isNavVisible ? 0 : -100, x: "-50%" }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl px-2 py-2 flex justify-between items-center backdrop-blur-xl bg-[#0f172a]/70 border border-white/10 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+        className="fixed top-6 left-1/2 z-50 w-[95%] max-w-4xl px-2 py-2 flex justify-between items-center backdrop-blur-xl bg-[#0f172a]/70 border border-white/10 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
       >
         
         {/* LOGO */}
