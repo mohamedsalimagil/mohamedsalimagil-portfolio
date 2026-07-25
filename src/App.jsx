@@ -380,11 +380,49 @@ function App() {
             {projects.map((project) => (
               <div key={project.id} className="relative flex flex-col items-center h-[450px]">
                 <div className="flex flex-col items-center mb-[-5px] relative z-0">
-                    <div onClick={() => toggleBulb(project.id)} className={`text-2xl mb-1 cursor-pointer transition-colors duration-200 ${litBulbs[project.id] ? 'text-amber-400' : 'text-slate-600'}`}>
-                        <FaLightbulb />
+                    {/* Interactive Bulb Container */}
+                    <div className="relative group/bulb flex justify-center mb-2">
+                        {/* Tooltip */}
+                        <div className="absolute -top-8 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover/bulb:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-lg border border-slate-700 z-50">
+                            {litBulbs[project.id] ? "Power Off" : "Power On"}
+                        </div>
+                        
+                        {/* Pulse Ring for Unlit State */}
+                        {!litBulbs[project.id] && (
+                            <div className="absolute inset-0 rounded-full bg-slate-500/20 animate-ping" style={{ animationDuration: '3s' }}></div>
+                        )}
+
+                        <button 
+                            onClick={(e) => { e.stopPropagation(); toggleBulb(project.id); }} 
+                            className={`relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 active:scale-95 border ${litBulbs[project.id] ? 'bg-amber-500/10 border-amber-500/30 shadow-[0_0_15px_rgba(251,191,36,0.3)]' : 'bg-slate-800/50 border-slate-700/50 hover:bg-slate-700/50 hover:border-slate-600'}`}
+                        >
+                            <div className={`text-2xl transition-colors duration-200 ${litBulbs[project.id] ? 'bulb-on' : 'text-slate-500 group-hover/bulb:text-slate-300'}`}>
+                                <FaLightbulb />
+                            </div>
+                        </button>
                     </div>
-                    {[...Array(project.chainLength)].map((_, i) => (<div key={i} className="chain-link"></div>))}
-                    <div className="w-3 h-3 rounded-full bg-slate-600 mt-1"></div>
+
+                    {[...Array(project.chainLength)].map((_, i) => (
+                        <div key={i} className="chain-link transition-all duration-300" style={{
+                            ...(litBulbs[project.id] ? {
+                                background: 'linear-gradient(180deg, #fbbf24, #fcd34d, #fbbf24)',
+                                boxShadow: '0 0 8px rgba(251,191,36,0.6)',
+                                transitionDelay: `${i * 30}ms`
+                            } : {
+                                transitionDelay: `${(project.chainLength - i) * 30}ms`
+                            })
+                        }}></div>
+                    ))}
+                    <div className="w-3 h-3 rounded-full mt-1 transition-all duration-300" style={{
+                        ...(litBulbs[project.id] ? {
+                            backgroundColor: '#fbbf24',
+                            boxShadow: '0 0 10px rgba(251,191,36,0.8)',
+                            transitionDelay: `${project.chainLength * 30}ms`
+                        } : {
+                            backgroundColor: '#475569',
+                            transitionDelay: '0ms'
+                        })
+                    }}></div>
                 </div>
                 <motion.div layoutId={`card-${project.id}`} onClick={() => setSelectedId(project.id)} className="w-full bg-[#0f172a] border-[6px] border-[#1e293b] rounded-[20px] shadow-xl relative z-20 overflow-hidden cursor-pointer hover:-translate-y-1 transition-transform duration-300" style={{ aspectRatio: '3/4' }}>
                   <div className="h-5 w-full bg-[#1e293b] flex justify-center items-center z-30 relative border-b border-white/5">
