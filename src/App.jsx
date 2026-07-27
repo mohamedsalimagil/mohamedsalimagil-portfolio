@@ -289,7 +289,7 @@ function App() {
 
             {/* RIGHT: Text Content */}
             <div className="text-left">
-                <motion.p initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="text-amber-500 font-bold text-sm tracking-widest uppercase mb-4">Junior Software Engineer</motion.p>
+                <motion.p initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="text-amber-500 font-bold text-sm tracking-widest uppercase mb-4">Fullstack Software Engineer</motion.p>
                 <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-5xl md:text-7xl font-extrabold mb-6 text-white tracking-tight leading-tight">
                     Mohamed Salim Agil
                 </motion.h1>
